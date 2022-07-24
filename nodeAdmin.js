@@ -28,8 +28,6 @@ function getAllHistory(req,res,con){
 	catch(err){
 		handyman_id=""
 	}
-	//console.log(sInfoValue+" "+sInfoRadio);
-	//?subject=any&catagory=any&time_slot=any&type=any&status=any&rating=any
 	var subject=values.subject.trim();
 	var catagory=values.catagory.trim();
 	var time_slot=values.time_slot.trim();
@@ -50,7 +48,6 @@ function getAllHistory(req,res,con){
 		if(sInfoRadio=="room"){
 			var r=sInfoValue.split(" ")[1];
 			var g=sInfoValue.split(" ")[0];
-			//console.log(r+" "+g);
 			sql+="and room_no="+r+" and gender='"+g+"' ";
 		}
 	}
@@ -143,7 +140,6 @@ function assignWork(electricianData,carpenterData,con,res){
 			return;
 		}
 		else{
-			//console.log(result);
 			var slot="slot1";
 			var e=0;
 			var c=0;
@@ -182,10 +178,7 @@ function assignWork(electricianData,carpenterData,con,res){
 				});
 			}
 			for(i in carpenterData){
-				//console.log(electricianData[i]['handyman_id']);
-				//console.log(electricianData[i]['issued']);
 				sql="update handyman_info set slot1="+carpenterData[i]['slot1']+",slot2="+carpenterData[i]['slot2']+",slot3="+carpenterData[i]['slot3']+",issued="+carpenterData[i]['issued']+" where handyman_id="+carpenterData[i]['handyman_id'];
-				//sql="update handyman_info set slot1="+electricianData[i]['slot1']+",slot2="+electricianData[i]['slot2']+",slot3="+electricianData[i]['slot3']+",issued=issued+"+electricianData[i]['issued']+"where handyman_id="+electricianData[i]['handyman_id'];
 				con.query(sql,function(err,result){
 					if(err!=null){
 						console.log(err);
@@ -228,8 +221,6 @@ function changeAdminPhone(req,res,con){
 		}
 		else if(result.affectedRows==1)
 			res.end("true");
-		//console.log(result);
-		//console.log(req.query);
 	})
 };
 

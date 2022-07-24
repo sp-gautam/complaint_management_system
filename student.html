@@ -268,20 +268,16 @@ $("[name^='star']").mouseover(function() {
     for(var j=1;j<=i;j++){
     	$("[name='star"+j+"']").removeClass();
     	$("[name='star"+j+"']").attr("class","fa fa-star w3-text-blue");
-    	//console.log("sss "+j+"xxx "+i);
-
+    	
     }
-    ////console.log("HERE "+j+" "+i);
     for(var j=5;j>i;j--){
     	$("[name='star"+j+"']").removeClass();
     	$("[name='star"+j+"']").attr("class","fa fa-star-o w3-text-blue");
     }
     $("#rating").val(i);
-    //console.log($("#rating").val());
 });
 
 $("#historyButton").click(function(){
-	//console.log("yes");
 	$.ajax({
 		type: 'get',
 		url: '/userComplaintHistory',
@@ -291,7 +287,6 @@ $("#historyButton").click(function(){
     	},
 		success: function (data) {
 			data=JSON.parse(data);
-			//console.log(data);
 			$("#historyDivChild").html("");
 			for(var i=0;i<data.length;++i){
 				createHistory(data[i]);
@@ -319,9 +314,6 @@ lodge.submit(function () {
 		data: lodge.serialize(),
 		success: function (data) {
 			if(data=="true"){
-				// $("#container").fadeOut(function() {
-				//   $(this).text("World").fadeIn();
-				// });
 				$("#submitLodge").fadeOut("slow",function() {
 				  $(this).val("Registered");
 				  $(this).prop("disabled",true);
@@ -385,7 +377,6 @@ $("#infoButton").click(function(){
 				},
 				success:function(data){
 					data=JSON.parse(data);
-					//console.log(data);
 					if(data!="false"){
 						$("#complaintsRegistered").html(data[0].total);
 						if(data.length>1){

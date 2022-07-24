@@ -33,8 +33,6 @@ app.get('/',function(req,resp){
 	
 	resp.sendFile(path.resolve('index.html'));
 	return;
-	//console.log(req);
-	//console.log(resp);
 });
 
 app.get('/w3cc.html',function(req,resp){
@@ -44,13 +42,10 @@ app.get('/w3cc.html',function(req,resp){
 app.get('/admin.html',function(req,resp){
 	resp.sendFile('admin.html',{root: path.join(__dirname, '')});
 })
-// app.get('/main.html',function(req,resp){
-// 	resp.sendFile('main.html',{root: path.join(__dirname, '')});
-// })
+
 
 app.get('/getData',function(req,resp){
 	var sess=req.query;
-	//console.log(sess);
 	if(sess.email && sess.type=='S')
 		{
 		
@@ -61,7 +56,6 @@ app.get('/getData',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    		}
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -80,7 +74,6 @@ app.get('/getData',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    		}
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -88,7 +81,6 @@ app.get('/getData',function(req,resp){
 		    resp.end(JSON.stringify(result));
 		    return;
 	  	});
-		//resp.sendFile(path.resolve('views/index.html'));
 		}
 	else if(sess.email && sess.type=='A')
 		{
@@ -99,7 +91,6 @@ app.get('/getData',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    		}
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -113,14 +104,11 @@ app.get('/getData',function(req,resp){
 			resp.end("false");
 		}
 	
-	//console.log(req);
-	//console.log(resp);
 })
 
 app.post('/signup',function(req,resp){
 	var values=req.body;
 	var sql = "INSERT INTO student_info (name,email, password, roll_no, phone_no, room_no, gender) VALUES ('"+values.name+"','"+values.email+"','"+values.password+"','"+values.rollno+"','"+values.phoneno+"','"+values.roomno+"','"+values.gender+"')";
-  	//resp.end(next);
   	con.query(sql, function (err, result) {
 	    if (err){ 
 	    	console.log(err);
@@ -131,13 +119,11 @@ app.post('/signup',function(req,resp){
 	    resp.end("true");
 	    return;
   	});
-  	//resp.end("Error Check feilds");
 })
 
 app.get('/signin',function(req,resp){
 	var values=req.query;
 	var sess=values;
-	//console.log(sess.type);
 	if(sess.type=="S"){
 		var sql = "SELECT * FROM student_info WHERE email='"+values.email+"' and password='"+values.password+"'";
 	  	con.query(sql, function (err, result) {
@@ -146,7 +132,6 @@ app.get('/signin',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    }
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -163,7 +148,6 @@ app.get('/signin',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    }
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -180,7 +164,6 @@ app.get('/signin',function(req,resp){
 		    	resp.end("false");
 		    	return;
 		    }
-		    //console.log(result.length);
 		    if(result.length==0){
 		    	resp.end("false");
 		    	return;
@@ -204,12 +187,10 @@ app.post('/userLodge',function(req,res){
 	console.log(value);
 	var cost=0;
 	var otp=parseInt((new Date()/1000)*Math.random())%10000+42;
-    //console.log(x);
-	if(value.type=="personnel")
+    if(value.type=="personnel")
 		cost=20;
 	var sql="Insert into complaint_info(student_id,subject,description,type,catagory,time_slot,date,cost,otp,descriptionFull)" +
 			"values('"+value.student_id+"','"+value.subject+"','"+value.description+"','"+value.type+"','"+value.category+"','"+value.time_slot+"',NOW(),"+cost+","+otp+",'"+value.descriptionFull+"')";
-	//"values('1','abc','desc','hostel','carpenter','9-10')";
 	con.query(sql,function(err,result){
 		 if (err){ 
 	    	console.log(err);
@@ -269,9 +250,6 @@ app.get('/userComplaintHistory',function(req,res){
 		 			console.log(err);
 		 			return;
 		 		}
-		 		// console.log(finalResult);
-		 		// console.log("--------------------------");
-		 		// console.log(result);
 		 		res.send(JSON.stringify(result.concat(finalResult)));
 		 		return;
 		 });
@@ -283,7 +261,6 @@ app.get('/userComplaintHistory',function(req,res){
 
 app.get('/userFeedback',function(req,res){
 	var value=req.query;
-	//console.log(value);
 	var review=value.review;
 	var rating=value.rating;
 	var id=value.id;
@@ -305,7 +282,6 @@ app.get('/userFeedback',function(req,res){
 
 app.get('/userComplaintAnalytics',function(req,res){
 	var value=req.query;
-	//console.log(value);
 	var sql="select count(*) as total from complaint_info where student_id="+value.student_id+" union select count(*) as solved from complaint_info where student_id="+value.student_id+" and status>=2";
 
 	con.query(sql,function(err,result){
